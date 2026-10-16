@@ -15,7 +15,7 @@ _m = {}
 def clip():
     if not _m:
         _m["model"] = CLIPModel.from_pretrained(MODEL, dtype=DT).to(DEV).eval()
-        _m["proc"] = CLIPProcessor.from_pretrained(MODEL,use_fast=False)
+        _m["proc"] = CLIPProcessor.from_pretrained(MODEL,use_fast=True)
     return _m["model"], _m["proc"]
 
 @torch.no_grad()

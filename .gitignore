@@ -5,3 +5,5 @@ venv/
 .env
 node_modules/
 .DS_Store
+index_out/shards/
+index_out/vectors.npy
