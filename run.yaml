@@ -7,11 +7,11 @@ setup_commands:
 
 run_commands:
   - "python src/main.py --help"
-  - "python src/main.py --mode demo --n 20"
+  # - "python src/main.py --mode demo --n 20"
   - "python src/main.py --mode search --query 'a rainy night road' --index sq8"
 
 test_commands: 
   - python -m pytest tests/test_retrieval_eval.py
 
 
-notes: "Text-to-video retrieval over BDD100K dashcam clips (CLIP + FAISS), plus a documented trial of the Video-RAG SDK. No GPU needed (uses Apple MPS if present, else CPU). First run downloads the CLIP model (about 1.7 GB). The demo indexes the clips in sample/ (small subset, a few minutes). The search command uses the prebuilt index in index_out/ (608 clips). Full build and eval need BDD100K data, which is not in the repo (see README for BDD_VIDEO_DIR and BDD_LABELS_DIR). The Video-RAG pipeline in src/vidrag_pipeline.py needs Ollama (qwen3-vl:8b) and is not part of the run commands; its measured timings are in the README."
+notes: "Text-to-video retrieval over BDD100K dashcam clips (CLIP + FAISS), plus a documented trial of the Video-RAG SDK. No GPU needed (uses Apple MPS if present, else CPU). First run downloads the CLIP model (about 1.7 GB). The demo requires a directory of .mov or .mp4 clips supplied with BDD_VIDEO_DIR or --video-dir; no sample clips are included. The search command uses the prebuilt index in index_out/ (608 clips). Full build and eval need BDD100K data, which is not in the repo (see README for BDD_VIDEO_DIR and BDD_LABELS_DIR). The Video-RAG pipeline in src/vidrag_pipeline.py needs Ollama (qwen3-vl:8b) and is not part of the run commands; its measured timings are in the README."

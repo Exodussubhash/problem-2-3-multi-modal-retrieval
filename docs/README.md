@@ -139,6 +139,9 @@ flowchart TD
 - Event queries (cut-ins, hard braking) using IMU and GPS data.
 
 ## Run (from the repo root)
+
+To run the video demo, first download the BDD100K video data (about 16 GB) from [the BDD100K dataset site](https://bdd-data.berkeley.edu/) and extract the clips. The dataset is not included in this repo. Set `BDD_VIDEO_DIR` to the directory containing the `.mov` or `.mp4` files; the demo indexes up to 20 clips by default. Label files are only needed for evaluation, not for the demo or search.
+
 ```bash
 python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
@@ -168,4 +171,3 @@ Apple Silicon note: FAISS and PyTorch each ship an OpenMP library, which can cra
 - `src/vidrag_pipeline.py`, `src/tools/`: modified SDK pipeline (trial)
 - `index_out/`: built indexes and metadata
 - `results/`: evaluation output
-- `sample/`: a few clips for the demo
