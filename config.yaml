@@ -1,0 +1,11 @@
+# Local dataset and index settings. Paths support ~ and are resolved from the
+# project root when they are relative.
+data:
+  video_dir: ~/Downloads/bdd100k_videos
+  labels_dir: ~/Downloads/100k/train
+
+index:
+  output_dir: index_out
+  model: openai/clip-vit-large-patch14
+  frame_times_seconds: [2, 6, 10, 14, 22, 30]
+  shard_clips: 50

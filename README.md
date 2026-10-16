@@ -11,3 +11,13 @@
 Once you start the test you have until your test's time limit to complete the assignment — see your invitation email for the exact duration. We ignore any commits pushed to your repo after that.
 
 Questions? careers@aintropy.ai
+
+## Local configuration and unit tests
+
+Edit `config.yaml` to set the BDD100K video directory, label directory, index
+output directory, CLIP model, sampled frame times, and shard size. Paths can use
+`~`; relative paths are resolved from this repository. `BDD_VIDEO_DIR` and
+`BDD_LABELS_DIR` environment variables can override the configured data paths.
+
+Run the lightweight retrieval logic unit tests with `python -m pytest`. They use
+in-memory examples and do not load the CLIP model or FAISS index.

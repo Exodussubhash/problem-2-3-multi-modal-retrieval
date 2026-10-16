@@ -7,6 +7,7 @@ faiss.omp_set_num_threads(1)
 
 import argparse, json, sys, time
 from pathlib import Path
+from config import CONFIG, resolve_path
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "src"))
@@ -114,8 +115,10 @@ def run_demo(video_dir, n):
 def main():
     p = argparse.ArgumentParser(description="Dashcam multimodal retrieval (CLIP + FAISS) scored on BDD100K labels")
     p.add_argument("--mode", choices=["demo", "build", "search", "eval", "all"], default="demo")
-    p.add_argument("--video-dir", default=os.environ.get("BDD_VIDEO_DIR", "./sample"))
-    p.add_argument("--labels-dir", default=os.environ.get("BDD_LABELS_DIR"),
+    p.add_argument("--video-dir", default=os.environ.get(
+        "BDD_VIDEO_DIR", str(resolve_path(CONFIG["data"]["video_dir"]))))
+    p.add_argument("--labels-dir", default=os.environ.get(
+        "BDD_LABELS_DIR", str(resolve_path(CONFIG["data"]["labels_dir"]))),
                    help="folder of per-clip BDD100K label .json files")
     p.add_argument("--n", type=int, default=20, help="max clips to index")
     p.add_argument("--query", default="a rainy night road")

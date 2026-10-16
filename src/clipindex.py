@@ -2,12 +2,13 @@
 import os, sys, glob, json, time, argparse
 import numpy as np, cv2, torch, faiss
 from transformers import CLIPModel, CLIPProcessor
+from config import CONFIG, resolve_path
 
-VID_DIR = os.path.expanduser("~/Downloads/bdd100k_videos")
-OUT = "index_out"
-MODEL = "openai/clip-vit-large-patch14"
-FRAME_TIMES = [2, 6, 10, 14, 22, 30]      # seconds; 10s = BDD100K labeled frame
-SHARD_CLIPS = 50
+VID_DIR = str(resolve_path(CONFIG["data"]["video_dir"]))
+OUT = str(resolve_path(CONFIG["index"]["output_dir"]))
+MODEL = CONFIG["index"]["model"]
+FRAME_TIMES = CONFIG["index"]["frame_times_seconds"]  # seconds; 10s = BDD100K labeled frame
+SHARD_CLIPS = CONFIG["index"]["shard_clips"]
 DEV = "mps" if torch.backends.mps.is_available() else "cpu"
 DT = torch.float16 if DEV == "mps" else torch.float32
 
@@ -59,6 +60,11 @@ def done_clips():
 def build(n):
     os.makedirs(f"{OUT}/shards", exist_ok=True)
     paths = sorted(glob.glob(f"{VID_DIR}/*.mov") + glob.glob(f"{VID_DIR}/*.mp4"))
+    if not paths:
+        raise FileNotFoundError(
+            f"No .mov or .mp4 videos found in {VID_DIR!r}. "
+            "Set data.video_dir in config.yaml or pass --video-dir to main.py."
+        )
     if os.path.exists("labels_slim.json"):      # only clips that have labels
         keep = {os.path.splitext(x["name"])[0] for x in json.load(open("labels_slim.json"))}
         paths = [p for p in paths if stem(p) in keep]
@@ -87,6 +93,11 @@ def finalize():
     arrs, meta = [], []
     for p in sorted(glob.glob(f"{OUT}/shards/*.npy")):
         arrs.append(np.load(p)); meta += [json.loads(l) for l in open(p[:-4] + ".jsonl")]
+    if not arrs:
+        raise RuntimeError(
+            f"No indexed frame shards found in {OUT!r}. Build the index from a "
+            "directory containing readable .mov or .mp4 videos first."
+        )
     X = np.vstack(arrs).astype("float32")
     assert len(X) == len(meta)
     n, d = X.shape

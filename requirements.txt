@@ -11,6 +11,7 @@ opentelemetry-api==1.45.1
 optimum==2.1.0
 optimum-onnx==0.1.0
 pandas==3.0.6
+PyYAML==6.0.3
 pydantic==2.14.1
 pydantic_core==2.50.1
 requests==2.34.2

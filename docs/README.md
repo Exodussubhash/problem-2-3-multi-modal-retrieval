@@ -146,7 +146,7 @@ export BDD_VIDEO_DIR=<folder of .mov/.mp4 clips>
 export BDD_LABELS_DIR=<folder of per-clip BDD100K label .json files>
 ```
 ```bash
-python src/main.py --mode demo --video-dir ./sample --n 20     # quick demo
+python src/main.py --mode demo  --n 20     # quick demo
 python src/main.py --mode build --n 3000                        # embed clips, build indexes
 python src/main.py --mode search --query "a rainy night road" --index sq8
 python src/main.py --mode eval --only10                         # score against labels
