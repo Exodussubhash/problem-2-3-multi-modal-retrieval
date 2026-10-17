@@ -2,7 +2,8 @@
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ["OMP_NUM_THREADS"] = "1"
-import faiss                                   # import faiss before torch
+import faiss                
+import uvicorn                   # import faiss before torch
 faiss.omp_set_num_threads(1)
 
 import io, json, threading, time
@@ -65,3 +66,7 @@ def predict_image(file: UploadFile = File(...), k: int = 10, index: str = "flat"
     with _lock:
         vec = ci.embed_images([img])
     return _rank(vec, min(max(k, 1), 50), index)
+
+
+if __name__ == '__main__':
+    uvicorn.run(app,host='0.0.0.0',port=8000)

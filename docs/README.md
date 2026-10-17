@@ -156,7 +156,7 @@ python src/main.py --mode eval --only10                         # score against 
 ```
 API:
 ```bash
-uvicorn --app-dir src api:app --port 8000
+uvicorn --app-dir src run_api:app --port 8000
 curl -X POST localhost:8000/predict -H "Content-Type: application/json" \
      -d '{"query": "a rainy night road", "k": 5, "index": "sq8"}'
 ```
@@ -167,7 +167,7 @@ Apple Silicon note: FAISS and PyTorch each ship an OpenMP library, which can cra
 ## Repo layout
 - `src/main.py`: entry point (demo, build, search, eval)
 - `src/clipindex.py`: frame sampling, CLIP embedding, FAISS indexes
-- `src/api.py`: search API
+- `src/run_api.py`: search API
 - `src/vidrag_pipeline.py`, `src/tools/`: modified SDK pipeline (trial)
 - `index_out/`: built indexes and metadata
 - `results/`: evaluation output

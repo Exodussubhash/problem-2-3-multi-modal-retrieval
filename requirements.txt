@@ -27,3 +27,8 @@ torch==2.14.1
 torchaudio==2.11.0
 torchvision==0.29.1
 transformers==4.57.6
+faiss-cpu
+Pillow
+fastapi
+uvicorn
+python-multipart
